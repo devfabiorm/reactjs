@@ -5,6 +5,7 @@ import './App.css';
 import Header from './Header';
 import Tabela from './Tabela';
 import Formulario from './Formulario';
+import PopUp from './PopUp';
 
 class App extends Component {
 
@@ -41,6 +42,7 @@ class App extends Component {
         return posAtual !== index;
       }),
     })
+    PopUp.exibeMensagem('success', 'Autor excluído com sucesso');
   }
 
   escutadorDeSubmit = autor => {
@@ -48,6 +50,8 @@ class App extends Component {
     this.setState({
       autores: [...this.state.autores, autor]
     });
+
+    PopUp.exibeMensagem('success', 'Autor cadastrado com sucesso')
   }
 
   render() {
@@ -56,6 +60,7 @@ class App extends Component {
       <Fragment>
         <Header />
         <div className="container">
+          <h1>Formulário</h1>
           <Tabela autores={this.state.autores} removeAutor={this.removeAutor} />
           <Formulario escutadorDeSubmit={this.escutadorDeSubmit} />
         </div>
