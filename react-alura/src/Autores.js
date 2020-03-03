@@ -1,24 +1,44 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import Header from './Header';
-import App from './App';
+import ApiService from './ApiService';
 
-const Autores = () => {
+class Autores extends Component {
 
-    let autores = new App().state.autores;
-    
-    return (
-        <Fragment>
-            <Header />
-            <div className="container">
-                <h1>Autores</h1>
-                <ul className="collection">
-                    {autores.map((autor, index) => {
-                        return(<li className="collection-item" key={index}>{autor.nome}</li>)
-                    })}
-                </ul>
-            </div>
-        </Fragment>
-    );
+    constructor(props){
+        super(props);
+
+        this.state = {
+            nomes: [],
+        }
+    }
+
+    componentDidMount(){
+
+        ApiService.ListaAutores()
+            .then(res => {
+                
+                this.setState({
+                    nomes : [...this.state.nomes, ...res.data]
+                })
+            })
+    }
+
+    render(){
+        return (
+            <Fragment>
+                <Header />
+                <div className="container">
+                    <h1>Autores</h1>
+                    <ul className="collection">
+                        {this.state.nomes.map((autor) => {
+                            return(<li className="collection-item" key={autor.id}>{autor.nome}</li>)
+                        })}
+                    </ul>
+                </div>
+            </Fragment>
+        );
+    }
+
 }
 export default Autores;
