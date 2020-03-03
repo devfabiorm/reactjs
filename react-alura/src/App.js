@@ -24,35 +24,44 @@ class App extends Component {
     const { autores } = this.state;
 
     ApiService.RemoveAutor(id)
+      .then(res => ApiService.TrataErros(res))
       .then(res => {
-        this.setState({
-          autores: autores.filter((autor) => {
-            return autor.id !== id;
-          }),
-        });
-        
-        PopUp.exibeMensagem('success', 'Autor excluído com sucesso');
+        if(res.message === 'deleted'){
+          this.setState({
+            autores: autores.filter((autor) => {
+              return autor.id !== id;
+            }),
+          });
+          PopUp.exibeMensagem('success', 'Autor excluído com sucesso');
+        }
       })
+      .catch(err => PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar excluir autor'))
   }
 
   escutadorDeSubmit = autor => {
 
     ApiService.CriaAutor(JSON.stringify(autor))
+      .then(res => ApiService.TrataErros(res))
       .then(res => {
-        this.setState({
-          autores: [...this.state.autores, autor]
-        });
-
-        PopUp.exibeMensagem('success', 'Autor cadastrado com sucesso');
+        if(res.message === 'success'){
+          this.setState({
+            autores: [...this.state.autores, autor]
+          });
+          PopUp.exibeMensagem('success', 'Autor cadastrado com sucesso');
+        }
       })
+      .catch(err => PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar cadastrar autor'))
   }
 
   componentDidMount(){
 
     ApiService.ListaAutores()
+      .then(res => ApiService.TrataErros(res))
       .then(res => {
-        this.setState({autores: [...this.state.autores, ...res.data]})
+        if(res.message === 'success')
+          this.setState({autores: [...this.state.autores, ...res.data]})
       })
+      .catch(err => PopUp.exibeMensagem('error', 'Erro na comunicação com a API ao tentar listas os cadastros'))
   }
 
   render() {
