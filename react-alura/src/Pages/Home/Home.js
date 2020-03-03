@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import './App.css';
+import './Home.css';
 
-import Header from './Header';
-import Tabela from './Tabela';
-import Formulario from './Formulario';
-import PopUp from './PopUp';
-import ApiService from './ApiService';
+import Header from '../../Components/Header/Header'
+import Tabela from '../../Components/Tabela/Tabela';
+import Formulario from '../../Components/Formulario/Formulario';
+import PopUp from '../../utils/PopUp';
+import ApiService from '../../utils/ApiService';
 
 class App extends Component {
 
@@ -24,7 +24,6 @@ class App extends Component {
     const { autores } = this.state;
 
     ApiService.RemoveAutor(id)
-      .then(res => ApiService.TrataErros(res))
       .then(res => {
         if(res.message === 'deleted'){
           this.setState({
@@ -41,7 +40,6 @@ class App extends Component {
   escutadorDeSubmit = autor => {
 
     ApiService.CriaAutor(JSON.stringify(autor))
-      .then(res => ApiService.TrataErros(res))
       .then(res => {
         if(res.message === 'success'){
           this.setState({
@@ -56,7 +54,6 @@ class App extends Component {
   componentDidMount(){
 
     ApiService.ListaAutores()
-      .then(res => ApiService.TrataErros(res))
       .then(res => {
         if(res.message === 'success')
           this.setState({autores: [...this.state.autores, ...res.data]})

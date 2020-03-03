@@ -1,8 +1,9 @@
 import React, { Fragment, Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import Header from './Header';
-import ApiService from './ApiService';
-import PopUp from './PopUp';
+
+import Header from '../../Components/Header/Header'
+import ApiService from '../../utils/ApiService';
+import PopUp from '../../utils/PopUp';
 
 class Livros extends Component{
 
@@ -17,7 +18,6 @@ class Livros extends Component{
     componentDidMount(){
 
         ApiService.ListaLivros()
-            .then(res => ApiService.TrataErros(res))
             .then(res => {
                 if(res.message === 'success')
                     this.setState({
