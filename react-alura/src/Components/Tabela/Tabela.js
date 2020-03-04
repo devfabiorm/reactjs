@@ -12,16 +12,20 @@ const CellDeleta = ({removeDados, id, titulo}) => {
     if(!removeDados)
         return null;
     
-    if(titulo)
-        return <TableCell>Remover</TableCell>
-    
-
     return (
     <TableCell>
         <Button variant="contained" color="primary" onClick={() => removeDados(id)}>Remover</Button>
     </TableCell>
     );
 };
+
+const TituloDeleta = ({removeDados}) => {
+
+    if(!removeDados)
+        return null;
+
+    return <TableCell>Remover</TableCell>
+}
 
 const Tabela = props => {
 
@@ -36,7 +40,7 @@ const Tabela = props => {
                             <TableCell>{campo.titulo}</TableCell>
                         ))
                     }
-                    <CellDeleta removeDados titulo />
+                    <TituloDeleta removeDados={removeDados} />
                 </TableRow>
             </TableHead>
             <TableBody>

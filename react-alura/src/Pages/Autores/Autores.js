@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 
+import Tabela from '../../Components/Tabela/Tabela';
 import Header from '../../Components/Header/Header';
 import ApiService from '../../utils/ApiService';
 import PopUp from '../../utils/PopUp';
@@ -28,16 +29,15 @@ class Autores extends Component {
     }
 
     render(){
+
+        const campos = [{titulo: 'Autores', chave: 'nome'}];
+
         return (
             <Fragment>
                 <Header />
                 <div className="container">
-                    <h1>Autores</h1>
-                    <ul className="collection">
-                        {this.state.nomes.map((autor) => {
-                            return(<li className="collection-item" key={autor.id}>{autor.nome}</li>)
-                        })}
-                    </ul>
+                    <h1>Página de Autores</h1>
+                    <Tabela campos={campos} dados={this.state.nomes} />
                 </div>
             </Fragment>
         );
