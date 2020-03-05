@@ -8,7 +8,6 @@ import Tabela from '../../Components/Tabela/Tabela';
 import Formulario from '../../Components/Formulario/Formulario';
 import PopUp from '../../utils/PopUp';
 import ApiService from '../../utils/ApiService';
-import Toast from '../../Components/Toast/Toast'
 
 class App extends Component {
 
@@ -17,7 +16,6 @@ class App extends Component {
 
     this.state = {
       autores: [],
-      open: true
     }
   }
   
@@ -76,7 +74,6 @@ class App extends Component {
       <Fragment>
         <Header />
         <Container>
-          <Toast open={this.state.open} handleClose={() => this.setState({open : false})} severity="success">Toast funcionando</Toast>
           <h1>Formulário</h1>
           <Formulario escutadorDeSubmit={this.escutadorDeSubmit} />
           <Tabela campos = {campos} dados={this.state.autores} removeDados={this.removeAutor} />
