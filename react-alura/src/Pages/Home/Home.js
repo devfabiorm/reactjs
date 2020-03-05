@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 import './Home.css';
+import Container from '@material-ui/core/Container'
 
 import Header from '../../Components/Header/Header'
 import Tabela from '../../Components/Tabela/Tabela';
 import Formulario from '../../Components/Formulario/Formulario';
 import PopUp from '../../utils/PopUp';
 import ApiService from '../../utils/ApiService';
+import Toast from '../../Components/Toast/Toast'
 
 class App extends Component {
 
@@ -14,7 +16,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      autores: []
+      autores: [],
+      open: true
     }
   }
   
@@ -72,11 +75,12 @@ class App extends Component {
     return (
       <Fragment>
         <Header />
-        <div className="container">
+        <Container>
+          <Toast open={this.state.open} handleClose={() => this.setState({open : false})} severity="success">Toast funcionando</Toast>
           <h1>Formulário</h1>
-          <Tabela campos = {campos} dados={this.state.autores} removeDados={this.removeAutor} />
           <Formulario escutadorDeSubmit={this.escutadorDeSubmit} />
-        </div>
+          <Tabela campos = {campos} dados={this.state.autores} removeDados={this.removeAutor} />
+        </Container>
       </Fragment>
     );
   }
